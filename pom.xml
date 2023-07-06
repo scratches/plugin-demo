@@ -12,14 +12,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.13</version>
+		<version>3.1.1</version>
 	</parent>
 
 	<name>Example Maven Plugin</name>
 	<description>An Example Maven Plugin</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
@@ -40,6 +40,25 @@
 			<artifactId>maven-plugin-annotations</artifactId>
 			<version>3.9.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.guice</groupId>
+			<artifactId>spring-guice</artifactId>
+			<version>2.0.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.inject</groupId>
+					<artifactId>guice</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -117,8 +136,7 @@
 						</goals>
 						<configuration>
 							<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-							<settingsFile>src/it/settings.xml</settingsFile>
-							<addTestClassPath>true</addTestClassPath>
+							<mavenExecutable>${basedir}/mvnw</mavenExecutable>
 							<streamLogs>true</streamLogs>
 						</configuration>
 					</execution>
@@ -126,9 +144,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<prerequisites>
-		<maven>3.5.0</maven>
-	</prerequisites>
 
 </project>

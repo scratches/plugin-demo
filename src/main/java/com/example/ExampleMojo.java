@@ -8,8 +8,10 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-
-import com.google.inject.AbstractModule;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.guice.module.SpringModule;
 
 @Mojo(name = "run", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class ExampleMojo extends AbstractMojo {
@@ -41,14 +43,17 @@ class DefaultService implements Service {
 	}
 }
 
-@Named
-class MyModule extends AbstractModule {
-	public MyModule() {
-		System.err.println("MyModule");
+@Configuration
+class MyConfiguration {
+	@Bean
+	public Service service() {
+		return new DefaultService();
 	}
+}
 
-	@Override
-	protected void configure() {
-		bind(Service.class).to(DefaultService.class);
+@Named
+class MyModule extends SpringModule {
+	public MyModule() {
+		super(SpringApplication.run(MyConfiguration.class));
 	}
 }

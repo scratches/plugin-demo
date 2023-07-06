@@ -6,5 +6,6 @@
 		<exportedPackage>com.google.inject.name.*</exportedPackage>
 		<exportedPackage>com.google.inject.spi.*</exportedPackage>
 		<exportedPackage>com.google.inject.util.*</exportedPackage>
+		<exportedPackage>com.google.inject.internal.*</exportedPackage>
 	</exportedPackages>
 </extension>

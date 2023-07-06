@@ -26,7 +26,7 @@ class MyModule extends AbstractModule {
 }
 ```
 
-Guice has to be explicitly on the runtime classpath for this to work.
+Guice has to be explicitly *not* on the runtime classpath for this to work - it comes from the parent classloader provided my Maven. Hence in the plugin we define that dependency as `provided`.
 
 You can also (optionally) use Spring Guice to construct your plugin by using `SpringModule` instead of `AbstractModule`:
 
@@ -39,7 +39,7 @@ class MyModule extends SpringModule {
 }
 ```
 
-Spring and Guice have to be explicitly on the runtime classpath for this to work.
+Spring and Guice have to be explicitly on the compile time classpath for this to work, but you have to exclude Guice from the plugin dependencies still, and you have to use Maven 4 for Spring Boot 3 (or Spring 6) because of Java 17.
 
 ## How Do You Do It?
 
@@ -57,6 +57,8 @@ You need to build and install the plugin first so it can be used as an extension
 	</exportedPackages>
 </extension>
 ```
+
+There is a sample at `src/it/sample` that you can use to verify that the plugin is running (it prints out "Hi" to stdout).
 
 ## How We Got Here
 
