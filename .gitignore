@@ -37,3 +37,5 @@ build/
 node_modules/
 package*.json
 .spectral.yaml
+
+.mvn/extensions.xml

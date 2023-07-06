@@ -43,7 +43,20 @@ Spring and Guice have to be explicitly on the runtime classpath for this to work
 
 ## How Do You Do It?
 
-You need to build and install the plugin first so it can be used as an extension, so `mvn install -Dinvoker.skip=true`. Then copy the `extensions.xml` into the `.mvn` directory. Then you should be able to `mvn install` without the `skip` flag to verify that it works.
+You need to build and install the plugin first so it can be used as an extension, so `./mvnw install` should work. The build copies a Core extensions configuration file (`extensions.xml`) into `.mvn` telling Maven to use the plugin as an extension. The plugin itself has a `META-INF/maven/extension.xml`:
+
+```xml
+<extension>
+	<exportedPackages>
+		<exportedPackage>com.google.inject.*</exportedPackage>
+		<exportedPackage>com.google.inject.binder.*</exportedPackage>
+		<exportedPackage>com.google.inject.matcher.*</exportedPackage>
+		<exportedPackage>com.google.inject.name.*</exportedPackage>
+		<exportedPackage>com.google.inject.spi.*</exportedPackage>
+		<exportedPackage>com.google.inject.util.*</exportedPackage>
+	</exportedPackages>
+</extension>
+```
 
 ## How We Got Here
 
